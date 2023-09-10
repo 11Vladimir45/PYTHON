@@ -7,6 +7,19 @@ BOARD_SIZE = 8
 board = [[' '] * BOARD_SIZE for _ in range(BOARD_SIZE)]
 
 
+# Функция для начальной расстановки шашек
+def initialize_board():
+    for i in range(3):
+        for j in range(BOARD_SIZE):
+            if (i + j) % 2 == 1:
+                board[i][j] = 'O'
+
+    for i in range(5, BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            if (i + j) % 2 == 1:
+                board[i][j] = 'X'
+
+
 # Функция для отображения игрового поля
 def display_board():
     print('   A  B  C  D  E  F  G  H')
@@ -66,13 +79,39 @@ def make_move(player, start, end):
     # Проверка, становится ли шашка королем
     if player == 'X' and end[0] == BOARD_SIZE - 1:
         board[end[0]][end[0]] = 'K'
-
     elif player == 'O' and end[0] == 0:
         board[end[0]][end[0]] = 'K'
 
+    # Проверка на съедание фигур противника
+    if abs(start[0] - end[0]) == 2 and abs(start[1] - end[1]) == 2:
+        mid_row = (start[0] + end[0]) // 2
+        mid_col = (start[1] + end[1]) // 2
+        if board[mid_row][mid_col] == 'O' or board[mid_row][mid_col] == 'X':
+            remove_opponent_piece(player, (mid_row, mid_col))
+
+# Функция для удаления фигур противника
+def remove_opponent_piece(player, position):
+    row, col = position
+    opponent = 'O' if player == 'X' else 'X'  # Определение фигуры противника
+
+    # Удаляем фигуру противника из игрового поля
+    board[row][col] = ' '
+
+    # Дополнительные действия, если была удалена королевская фигура противника
+    if opponent == 'X' and 'K' in sum(board, []):
+        for i in range(BOARD_SIZE):
+            for j in range(BOARD_SIZE):
+                if board[i][j] == 'O':
+                    board[i][j] = ' '  # Удаляем обычные шашки противника
+    elif opponent == 'O' and 'K' in sum(board, []):
+        for i in range(BOARD_SIZE):
+            for j in range(BOARD_SIZE):
+                if board[i][j] == 'X':
+                    board[i][j] = ' '  # Удаляем обычные шашки противника
 
 # Главная функция игры
 def play_game():
+    initialize_board()  # Инициализируем начальное состояние игрового поля
     current_player = 'X'
     Flag = True
     while Flag:
@@ -96,6 +135,13 @@ def play_game():
                 break
             else:
                 print("Неверный ход, попробуйте снова!")
+
+            # Добавляем логику для съедания фигур противника
+            if abs(start_row - end_row) == 2 and abs(start_col - end_col) == 2:
+                mid_row = (start_row + end_row) // 2
+                mid_col = (start_col + end_col) // 2
+                if board[mid_row][mid_col] == 'O' or board[mid_row][mid_col] == 'X':
+                    remove_opponent_piece(current_player, (mid_row, mid_col))
 
             # Проверка на победу
             # if 'X' not in sum(board, []) or 'O' not in sum(board, []):
@@ -122,7 +168,7 @@ def play_game():
                 remove_opponent_piece()
 
             display_board()
-            print(f"Игра окончена! Победил игрок {winner}!")
+            print(f"Игра окончена!") # TODO: Победил игрок {winner}
             break
 
         # Смена хода
