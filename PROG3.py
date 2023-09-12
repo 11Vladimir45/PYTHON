@@ -160,7 +160,7 @@ print(my_list_1)
 print(my_list_2)
 print(my_list_1 is my_list_2)
 
-x = [1,2,3]
+x = [1, 2, 3]
 print(x)
 x.append(x)
 print(x)

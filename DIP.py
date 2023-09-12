@@ -7,6 +7,7 @@ BOARD_SIZE = 8
 board = [[' '] * BOARD_SIZE for _ in range(BOARD_SIZE)]
 
 
+
 # Функция для начальной расстановки шашек
 def initialize_board():
     for i in range(3):
@@ -77,10 +78,11 @@ def make_move(player, start, end):
     board[end[0]][end[1]] = player
 
     # Проверка, становится ли шашка королем
-    if player == 'X' and end[0] == BOARD_SIZE - 1:
-        board[end[0]][end[0]] = 'K'
-    elif player == 'O' and end[0] == 0:
-        board[end[0]][end[0]] = 'K'
+    if player == 'X' and end[0] == 0:
+        board[end[0]][end[1]] = 'KX'
+    elif player == 'O' and end[0] == BOARD_SIZE - 1:
+        board[end[0]][end[1]] = 'KO'
+
 
     # Проверка на съедание фигур противника
     if abs(start[0] - end[0]) == 2 and abs(start[1] - end[1]) == 2:
@@ -88,6 +90,7 @@ def make_move(player, start, end):
         mid_col = (start[1] + end[1]) // 2
         if board[mid_row][mid_col] == 'O' or board[mid_row][mid_col] == 'X':
             remove_opponent_piece(player, (mid_row, mid_col))
+
 
 # Функция для удаления фигур противника
 def remove_opponent_piece(player, position):
@@ -98,16 +101,18 @@ def remove_opponent_piece(player, position):
     board[row][col] = ' '
 
     # Дополнительные действия, если была удалена королевская фигура противника
-    if opponent == 'X' and 'K' in sum(board, []):
+    if opponent == 'X' and 'KX' in sum(board, []):
         for i in range(BOARD_SIZE):
             for j in range(BOARD_SIZE):
                 if board[i][j] == 'O':
                     board[i][j] = ' '  # Удаляем обычные шашки противника
-    elif opponent == 'O' and 'K' in sum(board, []):
+    elif opponent == 'O' and 'KO' in sum(board, []):
         for i in range(BOARD_SIZE):
             for j in range(BOARD_SIZE):
                 if board[i][j] == 'X':
                     board[i][j] = ' '  # Удаляем обычные шашки противника
+
+
 
 # Главная функция игры
 def play_game():
@@ -136,39 +141,41 @@ def play_game():
             else:
                 print("Неверный ход, попробуйте снова!")
 
-            # Добавляем логику для съедания фигур противника
-            if abs(start_row - end_row) == 2 and abs(start_col - end_col) == 2:
-                mid_row = (start_row + end_row) // 2
-                mid_col = (start_col + end_col) // 2
-                if board[mid_row][mid_col] == 'O' or board[mid_row][mid_col] == 'X':
-                    remove_opponent_piece(current_player, (mid_row, mid_col))
+            # # Добавляем логику для съедания фигур противника
+            # if abs(start_row - end_row) == 2 and abs(start_col - end_col) == 2:
+            #     mid_row = (start_row + end_row) // 2
+            #     mid_col = (start_col + end_col) // 2
+            #     if board[mid_row][mid_col] == 'O' or board[mid_row][mid_col] == 'X':
+            #         remove_opponent_piece(current_player, (mid_row, mid_col))
 
-            # Проверка на победу
-            # if 'X' not in sum(board, []) or 'O' not in sum(board, []):
-            #     winner = 'X' if 'O' not in sum(board, []) else '0'
-            def remove_opponent_piece(player, position):
-                row, col = position
-                player = 'O' if player == 'X' else 'X'  # Определение фигуры противника
+                # Проверка на победу
 
-                # Удаляем фигуру противника из игрового поля
-                board[row][col] = ' '
+        #if 'X' not in sum(board, []) or 'O' not in sum(board, []):
+            #winner = 'X' if 'O' not in sum(board, []) else '0'
 
-                # Дополнительные действия, если была удалена королевская фигура противника
-                if player == 'X' and board[row][col] == 'K':
-                    for i in range(BOARD_SIZE):
-                        for j in range(BOARD_SIZE):
-                            if board[i][j] == 'O':
-                                board[i][j] = ' '  # Удаляем обычные шашки противника
-                elif player == 'O' and board[row][col] == 'K':
-                    for i in range(BOARD_SIZE):
-                        for j in range(BOARD_SIZE):
-                            if board[i][j] == 'X':
-                                board[i][j] = ' '  # Удаляем обычные шашки противника
+            # def remove_opponent_piece(player, position):
+            #     row, col = position
+            #     player = 'O' if player == 'X' else 'X'  # Определение фигуры противника
+            #
+            #     # Удаляем фигуру противника из игрового поля
+            #     board[row][col] = ' '
+            #
+            #     # Дополнительные действия, если была удалена королевская фигура противника
+            #     if player == 'X' and board[row][col] == 'KX':
+            #         for i in range(BOARD_SIZE):
+            #             for j in range(BOARD_SIZE):
+            #                 if board[i][j] == 'O':
+            #                     board[i][j] = ' '  # Удаляем обычные шашки противника
+            #     elif player == 'O' and board[row][col] == 'KO':
+            #         for i in range(BOARD_SIZE):
+            #             for j in range(BOARD_SIZE):
+            #                 if board[i][j] == 'X':
+            #                     board[i][j] = ' '  # Удаляем обычные шашки противника
 
-                remove_opponent_piece()
+            # remove_opponent_piece()
 
             display_board()
-            print(f"Игра окончена!") # TODO: Победил игрок {winner}
+            print(f"Игра окончена! Победил игрок:{winner}") # TODO: Победил игрок {winner}
             break
 
         # Смена хода
