@@ -7,7 +7,6 @@ BOARD_SIZE = 8
 board = [[' '] * BOARD_SIZE for _ in range(BOARD_SIZE)]
 
 
-
 # Функция для начальной расстановки шашек
 def initialize_board():
     for i in range(3):
@@ -67,6 +66,7 @@ def is_valid_move(player, start, end):
 
     # Проверка на свободную клетку
     elif board[end[0]][end[1]] != ' ':
+        print('занято')
         return False
     else:
         return True
@@ -82,7 +82,6 @@ def make_move(player, start, end):
         board[end[0]][end[1]] = 'KX'
     elif player == 'O' and end[0] == BOARD_SIZE - 1:
         board[end[0]][end[1]] = 'KO'
-
 
     # Проверка на съедание фигур противника
     if abs(start[0] - end[0]) == 2 and abs(start[1] - end[1]) == 2:
@@ -101,17 +100,38 @@ def remove_opponent_piece(player, position):
     board[row][col] = ' '
 
     # Дополнительные действия, если была удалена королевская фигура противника
-    if opponent == 'X' and 'KX' in sum(board, []):
-        for i in range(BOARD_SIZE):
-            for j in range(BOARD_SIZE):
-                if board[i][j] == 'O':
-                    board[i][j] = ' '  # Удаляем обычные шашки противника
-    elif opponent == 'O' and 'KO' in sum(board, []):
-        for i in range(BOARD_SIZE):
-            for j in range(BOARD_SIZE):
-                if board[i][j] == 'X':
-                    board[i][j] = ' '  # Удаляем обычные шашки противника
+    # if opponent == 'X' and 'KX' in board[i][j]:
+    #     for i in range(BOARD_SIZE):
+    #         for j in range(BOARD_SIZE):
+    #             if board[i][j] == 'O':
+    #                 board[i][j] = ' '  # Удаляем обычные шашки противника
+    # elif opponent == 'O' and 'KO' in board[i][j]:
+    #     for i in range(BOARD_SIZE):
+    #         for j in range(BOARD_SIZE):
+    #             if board[i][j] == 'X':
+    #                 board[i][j] = ' '  # Удаляем обычные шашки противника
 
+    #winner_player()
+
+
+def winner_player():
+    counter_X = 0
+    for i in range(BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            if (i + j) % 2 == 1 and board[i][j] == 'X':
+                counter_X += 1
+    if counter_X == 0:
+        print(f"Игра окончена!Победил игрок: 'O'!")
+    print(f'checkers X = {counter_X}')
+
+    counter_O = 0
+    for i in range(BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            if (i + j) % 2 == 1 and board[i][j] == 'O':
+                counter_O += 1
+    if counter_O == 0:
+        print(f"Игра окончена!Победил игрок: 'X'!")
+    print(f'checkers O = {counter_O}')
 
 
 # Главная функция игры
@@ -121,6 +141,7 @@ def play_game():
     Flag = True
     while Flag:
         display_board()
+        # winner_player()
         print(f"Ходит игрок {current_player}")
         Flag = True
         while Flag:
@@ -137,6 +158,7 @@ def play_game():
                 print('Перед')
                 make_move(current_player, (start_row, start_col), (end_row, end_col))
                 print('После')
+                winner_player()
                 break
             else:
                 print("Неверный ход, попробуйте снова!")
@@ -148,10 +170,10 @@ def play_game():
             #     if board[mid_row][mid_col] == 'O' or board[mid_row][mid_col] == 'X':
             #         remove_opponent_piece(current_player, (mid_row, mid_col))
 
-                # Проверка на победу
+            # Проверка на победу
 
-        #if 'X' not in sum(board, []) or 'O' not in sum(board, []):
-            #winner = 'X' if 'O' not in sum(board, []) else '0'
+            # if 'X' not in sum(board, []) or 'O' not in sum(board, []):
+            # winner = 'X' if 'O' not in sum(board, []) else '0'
 
             # def remove_opponent_piece(player, position):
             #     row, col = position
@@ -174,12 +196,14 @@ def play_game():
 
             # remove_opponent_piece()
 
-            display_board()
-            print(f"Игра окончена! Победил игрок:{winner}") # TODO: Победил игрок {winner}
+            # display_board()
+        #if count_O == 0 or count_X == 0:
+            print(f"Игра окончена!")  # Победил игрок {winner}
             break
 
         # Смена хода
         current_player = 'X' if current_player == 'O' else 'O'
+
 
 
 # Запуск игры
