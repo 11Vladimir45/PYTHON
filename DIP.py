@@ -11,7 +11,10 @@ TODO:
     Ожидаемое поведение - проинформировать, что ход неверен из-за необходимости съесть фигуру противника, предложить повторить ход.
 * ...
 '''
-
+# В блоке главной функции нужно создать условие ,при
+# котором при съедании всех шашек противника игра будет заканчиваться, т.е.
+# программа выйдет из цикла while с командой break. Также дамка не ест на дальнии
+# дистанции и за раз несколько шашек.В этом и есть пока моя трудность.
 
 # Игра "Шашки"
 
@@ -65,7 +68,7 @@ def is_valid_move(player, start, end):
                                     if end[1] >= BOARD_SIZE:
                                         return False
 
-        # # Проверка в зависимости от игрока (для короля и обычных шашек)
+         # Проверка в зависимости от игрока (для короля и обычных шашек)
         elif player == 'X':
             tmp = board[start[0]][start[1]]
             print(tmp)
@@ -126,7 +129,7 @@ def remove_opponent_piece(player, position):
     #             if board[i][j] == 'X':
     #                 board[i][j] = ' '  # Удаляем обычные шашки противника
 
-    #winner_player()
+    # winner_player()
 
 
 def winner_player():
@@ -147,17 +150,23 @@ def winner_player():
     if counter_O == 0:
         print(f"Игра окончена!Победил игрок: 'X'!")
     print(f'checkers O = {counter_O}')
+    return counter_O, counter_X
 
 
 # Главная функция игры
-def play_game():
+def play_game(counter_X, counter_O):
     initialize_board()  # Инициализируем начальное состояние игрового поля
     current_player = 'X'
     Flag = True
     while Flag:
         display_board()
-        # winner_player()
-        print(f"Ходит игрок {current_player}")
+        if counter_O == 0 or counter_X == 0:
+            print(f"Игра окончена!")
+            # print(f"Ходит игрок {current_player}")
+            break
+        else:
+            print(f"Ходит игрок {current_player}")
+
         Flag = True
         while Flag:
             start = input("Введите начальную позицию (строка столбец, например 3A): ")
@@ -212,14 +221,14 @@ def play_game():
             # remove_opponent_piece()
 
             # display_board()
-        #if count_O == 0 or count_X == 0:
-            print(f"Игра окончена!")  # Победил игрок {winner}
-            break
+
+            # if counter_O == 0 or counter_X == 0:
+            # print(f"Игра окончена!")  # Победил игрок {winner}
+            # break
 
         # Смена хода
         current_player = 'X' if current_player == 'O' else 'O'
 
 
-
 # Запуск игры
-play_game()
+play_game(12, 12)
