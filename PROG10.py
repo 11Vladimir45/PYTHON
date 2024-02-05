@@ -5,11 +5,11 @@
 # a - append
 # w+ - append
 file = open('little_dorrit_1.txt', 'r', encoding='utf-8')
-# result = file.read()
-# print(result)
+#result = file.read()
+#print(result)
 for line in file:
     print(line, end='')
-file.close()
+#file.close()
 print('*' * 77)
 # Менеджеры контекста with
 # __enter__

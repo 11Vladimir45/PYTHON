@@ -5,3 +5,4 @@ name = "Владимир"
 print(name)
 address = '606084 , Nizhny Novgorod , Tankovay str.,building 3, appt. 28'
 print(address)
+print(name, address)

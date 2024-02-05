@@ -33,7 +33,7 @@ class Employee:  # класс
 
     @staticmethod
     def now():
-        import datetime
+        import date_time
         return datetime.datetime.now()
 
     def __str__(self):  # строковое представление объекта

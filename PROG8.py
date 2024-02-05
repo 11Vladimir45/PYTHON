@@ -17,7 +17,7 @@ def factorial_recursive(n: int) -> int:
         return n
     return n * factorial_recursive(n - 1)
 
-
+print('-' * 78)
 # Факториал числа - это число умноженное на каждое предыдущее вплоть до 1
 # 7! = 7 * 6 * 5 * 4 * 3 * 2 * 1 = 5040
 start = datetime.datetime.now()
@@ -25,7 +25,9 @@ result = 1
 for i in range(1, 997):
     result *= i
 print(result)
+
 print('-' * 78)
+
 print(datetime.datetime.now() - start)
 start = datetime.datetime.now()
 result = factorial_recursive(5)
@@ -37,6 +39,8 @@ print(datetime.datetime.now() - start)
 # factorial_recursive(2)
 # factorial_recursive(1)
 # return  5 * 4 * 3 * 2 * 1
+
+print('-' * 78)
 
 # Функции высшего порядка - функции, которые могут принимать в
 # качестве аргумента функцию и возвращать функцию, как результат своей работы
@@ -57,10 +61,12 @@ print(result)
 result = tuple(map(float, nums))
 print(result)
 
+print('-' * 78)
+
 # filter - принимает функцию и итератор, возвращает
-# итератор элементами, которого являются данные
-# их исходноого для которых функция вернула True
-nums = list(range(-2, 10, 1))
+# итератор , элементами которого являются данные
+# из исходного списка , для которых функция вернула True
+nums = list(range(-2, 12, 2))
 print(nums)
 
 
@@ -73,20 +79,24 @@ def check(num):
 result = filter(check, nums)
 print(list(result))
 
+print('-' * 78)
+
 # reduce - принимает функцию и последовательность и возвращает один результат
 from functools import reduce, partial
 import operator
 
 nums = list(range(1, 10))
+print(nums)
 result = reduce(operator.add, nums)
 print(result)
 result = reduce(operator.mul, nums)
 print(result)
 product = partial(reduce, operator.mul)
-print(product([1, 2, 3]))
+print(product([1, 2, 3, 5]))
 
 
 # product = reduce(operator.mul, )
+print('-' * 78)
 
 # Замыкания
 def talk(n: int, name: str):
@@ -118,6 +128,7 @@ print(mul5(4))
 mul2 = mul(2)
 print(mul2(4))
 
+print('-' * 78)
 
 # Декораторы
 def first():
