@@ -6,3 +6,5 @@ my_string = 'Июнь'
 print(my_string)
 my_string = 'Владимир'
 print(my_string)
+my_string = 'Bob'
+print(my_string)
