@@ -70,7 +70,7 @@ print(bool(-1))  # True
 print(bool(1000000))  # True
 print(bool(False))
 print(bool(True))
-print('*'* 80)
+print('*' * 80)
 
 # Если обьект пустой,то-False , иначе True
 print(bool(''))
@@ -80,7 +80,7 @@ print(str(456))
 print(float('123.6'))
 print(int(15.6))
 print(float(5))
-print('*'* 80)
+print('*' * 80)
 
 # Округление чисел
 print(round(1.5))
@@ -94,3 +94,5 @@ print(x is y)
 x = 257
 y = 257
 print(x is y)
+
+

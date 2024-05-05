@@ -97,7 +97,7 @@ squares.update({6: 36})
 print(squares)
 squares.update({1: 3, 2: 5, 3: 10})
 print(squares)
-print('*'*70)
+print('*' * 70)
 # Вывод ключей и значений
 for i in squares.items():
     print(i)
@@ -126,6 +126,7 @@ my_dict = {
 }
 print(my_dict)
 from operator import add, mul, sub
+
 my_dict = {
     '+': add,
     '*': mul,
